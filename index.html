@@ -20,52 +20,10 @@
     }
     a {
       color: #58A6FF;          /* GitHub 暗色模式下的链接颜色 */
-      text-decoration: none;
+      text-decoration: none;   /* 默认移除下划线 */
     }
     a:hover {
-      text-decoration: underline;
-    }
-    a {
-      text-decoration: underline; /* 添加下划线 */
-    }
-    /* ====== 顶部导航栏 ====== */
-    .navbar {
-      display: flex;
-      align-items: center;
-      background-color: #161B22; /* 较深的背景色 */
-      padding: 0 16px;
-      border-bottom: 1px solid #21262D;
-    }
-    .navbar-item {
-      margin-right: 20px;
-      padding: 16px 0;
-      cursor: pointer;
-    }
-    .navbar-item.active {
-      border-bottom: 2px solid #f78166; /* 作为激活标签的视觉提示 */
-    }
-    #文件夹设置，点开显示在最下面的CSS修饰中
-    .folder-container {
-              /* 这里使用flex布局，也可使用其他方式，例如 display: inline-block; 等 */
-              display: flex;
-              /* 如果想让文件夹之间有一定间距，可酌情加上间距属性 */
-              gap: 20px;
-    }
-    .folder {
-            display: inline-block;
-            margin: 5px;
-            padding: 1px;
-            background-color: #525288;
-            border-radius: 5px;
-            text-align: center;
-            cursor: pointer;
-            width: 140px;
-    }
-    .folder-content {
-        display: none;
-        margin-top: 10px;
-        padding-left: 20px;
-        border-left: 2px dashed #ccc;
+      text-decoration: underline; /* 鼠标悬停时显示下划线 */
     }
 
     /* ====== 容器 ====== */
@@ -74,7 +32,8 @@
       margin: 0 auto;
       padding: 20px;
     }
-    /* 标题间距、字号可自行调整 */
+
+    /* ====== 标题样式 ====== */
     h1, h2, h3 {
       margin-top: 1.5em;
       margin-bottom: 0.5em;
@@ -92,242 +51,258 @@
       font-size: 1.1rem;
     }
 
-    /* 列表缩进与样式 */
-    ul {
-      margin: 0.5em 0 1em 1.5em;
+    /* ====== 文件夹样式 ====== */
+    /* 修正点 1: CSS 注释格式错误，已从 # 改为 /* ... */
+    .folder-container {
+      display: flex;
+      flex-wrap: wrap; /* 允许换行 */
+      gap: 15px; /* 文件夹之间的间距 */
     }
-    li {
-      margin: 4px 0;
+    .folder {
+      display: inline-block;
+      margin: 5px;
+      padding: 8px 12px;
+      background-color: #21262d;
+      border: 1px solid #30363d;
+      border-radius: 6px;
+      text-align: center;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    .folder:hover {
+        background-color: #30363d;
+    }
+    .folder-content {
+      display: none;
+      margin-top: 10px;
+      padding-left: 20px;
+      border-left: 2px dashed #30363d;
+      /* 让内容区另起一行并占满宽度 */
+      flex-basis: 100%;
+      width: 100%;
     }
 
-    /* 小屏幕适配（可根据需要修改） */
+    /* ====== 列表样式 ====== */
+    ul {
+      list-style-type: disc; /* 使用实心圆点 */
+      margin: 0.5em 0 1em 20px;
+      padding: 0;
+    }
+    li {
+      margin: 6px 0;
+    }
+
+    /* ====== 移动端适配 ====== */
     @media (max-width: 600px) {
-      .navbar {
+      .folder-container {
         flex-direction: column;
         align-items: flex-start;
-      }
-      .navbar-item {
-        margin-right: 0;
       }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <!-- 大标题 -->
     <h1>信号处理</h1>
-      <div class="folder-container">
-          <div class="folder" onclick="toggleFolder('folder-1')">python库帮助文档</div>
-              <div id="folder-1" class="folder-content">
-                  <li>
-                      <a href="https://gymnasium.farama.org/api/env/#implementing-environments" target="_blank">
-                      gym官网</a> &
-                      <a href="https://pytorch.org/tutorials/beginner/basics/intro.html" target="_blank">
-                      pytorch官网</a> &
-                      <a href="https://pytorch.org/tutorials/beginner/basics/intro.html" target="_blank">
-                      pytorch中文</a> &
-                      <a href="https://numpy.org/" target="_blank">numpy</a> &
-                      <a href="https://matplotlib.org/" target="_blank">matplotlib</a> &
-                      <a href="https://pypandas.cn/docs/ " target="_blank">pandas</a> &
-                      <a href="https://pettingzoo.farama.org/content/environment_creation/" target="_blank">
-                      pettingzoo官网</a></li>
+    <div class="folder-container">
+      <div class="folder" onclick="toggleFolder('folder-1')">python库帮助文档</div>
+      <!-- 修正点 2: <li> 必须在 <ul> 内部，且内容应该用 <ul> 包裹以保持结构正确 -->
+      <div id="folder-1" class="folder-content">
+        <ul>
+          <li>
+            <a href="https://gymnasium.farama.org/api/env/#implementing-environments" target="_blank">gym官网</a> &
+            <a href="https://pytorch.org/tutorials/beginner/basics/intro.html" target="_blank">pytorch官网</a> &
+            <a href="https://pytorch.org/tutorials/beginner/basics/intro.html" target="_blank">pytorch中文</a> &
+            <a href="https://numpy.org/" target="_blank">numpy</a> &
+            <a href="https://matplotlib.org/" target="_blank">matplotlib</a> &
+            <a href="https://pypandas.cn/docs/" target="_blank">pandas</a> &
+            <a href="https://pettingzoo.farama.org/content/environment_creation/" target="_blank">pettingzoo官网</a>
+          </li>
+          <li>
+            <a href="https://stable-baselines3.readthedocs.io/en/master/guide/rl_tips.html" target="_blank">baselines3</a> &
+            <a href="https://tianshou.org/en/stable/01_tutorials/00_dqn.html" target="_blank">tianshou</a> &
+            <a href="https://magent2.farama.org/" target="_blank">magent2</a> &
+            <a href="https://docs.scipy.org.cn/doc/scipy/" target="_blank">scipy</a> &
+            <a href="https://pillow-docs-cn.readthedocs.io/zh-cn/latest/index.html" target="_blank">pillow</a>
+          </li>
+          <li>
+            <a href="https://requests.readthedocs.io/projects/cn/zh-cn/latest/" target="_blank">requests</a> &
+            <a href="https://www.numpy.org.cn/reference/" target="_blank">numpy中文</a> &
+            <a href="https://www.cvxpy.org/" target="_blank">cvxpy</a> &
+            <a href="https://scikitlearn.com.cn/0.21.3/" target="_blank">sklearn</a>
+          </li>
+        </ul>
+      </div>
 
-                  <li>
-                      <a href="https://stable-baselines3.readthedocs.io/en/master/guide/rl_tips.html" target="_blank">
-                      baselines3</a> &
-                      <a href="https://tianshou.org/en/stable/01_tutorials/00_dqn.html" target="_blank">
-                      tianshou</a> &
-                      <a href="https://magent2.farama.org/" target="_blank">
-                      magent2</a> &
-                      <a href="https://docs.scipy.org.cn/doc/scipy/" target="_blank">scipy</a> &
-                      <a href="https://pillow-docs-cn.readthedocs.io/zh-cn/latest/index.html" target="_blank">
-                      pillow</a></li>
-                  <a href="https://requests.readthedocs.io/projects/cn/zh-cn/latest/ " target="_blank">requests</a> &
-                  <a href="https://www.numpy.org.cn/reference/ " target="_blank">numpy中文</a> &
-                  <a href="https://www.cvxpy.org/ " target="_blank">cvxpy</a> &
-                  <a href="https://scikitlearn.com.cn/0.21.3/" target="_blank">sklearn</a>
-              </div>
-          <div class="folder" onclick="toggleFolder('folder-2')">python教程/技巧</div>
-              <div id="folder-2" class="folder-content">
-                  <a href="https://www.showmeai.tech/tutorials/56?articleId=88" target="_blank">25面向对象编程</a> &
-                  <a href="https://www.showmeai.tech/tutorials/56?articleId=89" target="_blank">26命名空间和作用域(变量的使用范围很重要)</a> &
-                  <a href="a" target="_blank">a</a> &<a href="https://www.showmeai.tech/tutorials/56?articleId=90" target="_blank">27日期与时间(学的不是很深刻)</a> &
-                  <a href="https://zhuanlan.zhihu.com/p/358037793" target="_blank">pycharm的20个快捷键</a> &
-                  <a href="https://blog.csdn.net/qq_45176548/article/details/113561695" target="_blank">pycharm大量快捷键</a>
-              </div>
-          <div class="folder" onclick="toggleFolder('folder-3')">pytorch相关基础</div>
-              <div id="folder-3" class="folder-content">
-                  <li>
-                      <a href="https://www.cnblogs.com/phillee/p/18599125" target="_blank">
-                      python与pytorch版本对应表</a> &
-                      <a href="https://blog.csdn.net/jjjhut/article/details/131917230" target="_blank">
-                          看第二节虚拟环境管理</a> &
-                      <a href="https://zhuanlan.zhihu.com/p/601918442" target="_blank">pytorch安装步骤</a> &
-                      <a href="https://pytorch.org/get-started/previous-versions/#v221" target="_blank">
-                          pytorch官网安装命令</a></li>
-                  <li>
-                      <a href="https://blog.csdn.net/qiaoxinyu1989/article/details/135953830" target="_blank">
-                      pytorch安装最详细教程(但未操作)</a> &
-                      <a href="https://blog.csdn.net/qq_45956730/article/details/126600028" target="_blank">
-                          GPU版本安装Pytorch教程(未来可能用到)</a></li>
-                  <li>
-                      <a href="https://pytorch.org/" target="_blank">最新版pytorch快速安装</a> &
-                      <a href="https://pypi.org/" target="_blank">python库网站</a> &
-                      <a href="https://blog.csdn.net/W_REP/article/details/117134384" target="_blank">
-                          pycharm库安装</a> &
-                      </li>
-              </div>
-          <div class="folder" onclick="toggleFolder('folder-4')">pytorch/gym学习</div>
-              <div id="folder-4" class="folder-content">
-                  <li>
-                      <a href="https://www.runoob.com/pytorch/pytorch-tensor.html" target="_blank">
-                      张量基本操作</a> &
-                      <a href="https://www.runoob.com/pytorch/pytorch-neural-network.html" target="_blank">
-                          常见的网络层等指令及适用类型(偏下位置)</a> &
-                      <a href="https://www.runoob.com/pytorch/pytorch-basic.html" target="_blank">
-                          pytorch基础(有模型训练步骤详解)</a> &
-                      <a href="https://www.runoob.com/pytorch/pytorch-first-neural-network.html" target="_blank">
-                          pytorch简单实例</a></li>
-                  <li>
-                      <a href="https://blog.csdn.net/FRIGIDWINTER/article/details/128400818" target="_blank">
-                      Gym安装与环境搭建</a></li>
-                  <li>
-                      <a href="https://pytorch.org/" target="_blank">最新版pytorch快速安装</a> &
-                      <a href="https://pypi.org/" target="_blank">python库网站</a> &
-                      <a href="https://blog.csdn.net/qq_57780685/article/details/137244159" target="_blank">
-                          python库离线安装</a> &
-                      </li>
-              </div>
-          <div class="folder" onclick="toggleFolder('folder-5')">关于科研</div>
-              <div id="folder-5" class="folder-content">
-                  <li>
-                      <a href="https://www.ablesci.com/journal" target="_blank">
-                      科研通-期刊查询</a> &
-                      <a href="https://www.yuque.com/dashboard" target="_blank">
-                          语雀</a> &
-                      <a href="https://appcd.chaoxing.com/bilingual-reader/upload?timestamp=1726217173665&pt=9&aid=125547&uname=%E5%8C%97%E4%BA%AC%E5%8C%96%E5%B7%A5%E5%A4%A7%E5%AD%A6&sign=6c622d5786a2b8e56a4238e2d8455479" target="_blank">
-                          超星翻译</a> &
-                      <a href="https://colors.ichuantong.cn/" target="_blank">
-                          仓色</a> &
-                      <a href="https://www.zhongguose.com" target="_blank">
-                          中国色</a></li>
-              </div>
-      </div> <!-- 顶头文件夹内容 -->
+      <div class="folder" onclick="toggleFolder('folder-2')">python教程/技巧</div>
+      <div id="folder-2" class="folder-content">
+        <ul>
+          <li>
+            <a href="https://www.showmeai.tech/tutorials/56?articleId=88" target="_blank">25面向对象编程</a> &
+            <a href="https://www.showmeai.tech/tutorials/56?articleId=89" target="_blank">26命名空间和作用域</a> &
+            <a href="https://www.showmeai.tech/tutorials/56?articleId=90" target="_blank">27日期与时间</a> &
+            <a href="https://zhuanlan.zhihu.com/p/358037793" target="_blank">pycharm的20个快捷键</a> &
+            <a href="https://blog.csdn.net/qq_45176548/article/details/113561695" target="_blank">pycharm大量快捷键</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="folder" onclick="toggleFolder('folder-3')">pytorch相关基础</div>
+      <div id="folder-3" class="folder-content">
+        <ul>
+          <li>
+            <a href="https://www.cnblogs.com/phillee/p/18599125" target="_blank">python与pytorch版本对应表</a> &
+            <a href="https://blog.csdn.net/jjjhut/article/details/131917230" target="_blank">虚拟环境管理</a> &
+            <a href="https://zhuanlan.zhihu.com/p/601918442" target="_blank">pytorch安装步骤</a> &
+            <a href="https://pytorch.org/get-started/previous-versions/#v221" target="_blank">pytorch官网安装命令</a>
+          </li>
+          <li>
+            <a href="https://blog.csdn.net/qiaoxinyu1989/article/details/135953830" target="_blank">pytorch安装最详细教程</a> &
+            <a href="https://blog.csdn.net/qq_45956730/article/details/126600028" target="_blank">GPU版本安装Pytorch教程</a>
+          </li>
+          <li>
+            <a href="https://pytorch.org/" target="_blank">最新版pytorch快速安装</a> &
+            <a href="https://pypi.org/" target="_blank">python库网站</a> &
+            <a href="https://blog.csdn.net/W_REP/article/details/117134384" target="_blank">pycharm库安装</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="folder" onclick="toggleFolder('folder-4')">pytorch/gym学习</div>
+      <div id="folder-4" class="folder-content">
+        <ul>
+          <li>
+            <a href="https://www.runoob.com/pytorch/pytorch-tensor.html" target="_blank">张量基本操作</a> &
+            <a href="https://www.runoob.com/pytorch/pytorch-neural-network.html" target="_blank">常见的网络层等指令</a> &
+            <a href="https://www.runoob.com/pytorch/pytorch-basic.html" target="_blank">pytorch基础</a> &
+            <a href="https://www.runoob.com/pytorch/pytorch-first-neural-network.html" target="_blank">pytorch简单实例</a>
+          </li>
+          <li>
+            <a href="https://blog.csdn.net/FRIGIDWINTER/article/details/128400818" target="_blank">Gym安装与环境搭建</a>
+          </li>
+          <li>
+            <a href="https://pypi.org/" target="_blank">python库网站</a> &
+            <a href="https://blog.csdn.net/qq_57780685/article/details/137244159" target="_blank">python库离线安装</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="folder" onclick="toggleFolder('folder-5')">关于科研</div>
+      <div id="folder-5" class="folder-content">
+        <ul>
+          <li>
+            <a href="https://www.ablesci.com/journal" target="_blank">科研通-期刊查询</a> &
+            <a href="https://www.yuque.com/dashboard" target="_blank">语雀</a> &
+            <a href="https://appcd.chaoxing.com/bilingual-reader/upload?timestamp=1726217173665&pt=9&aid=125547&uname=%E5%8C%97%E4%BA%AC%E5%8C%96%E5%B7%A5%E5%A4%A7%E5%AD%A6&sign=6c622d5786a2b8e56a4238e2d8455479" target="_blank">超星翻译</a> &
+            <a href="https://colors.ichuantong.cn/" target="_blank">仓色</a> &
+            <a href="https://www.zhongguose.com" target="_blank">中国色</a>
+          </li>
+        </ul>
+      </div>
+    </div> <!-- .folder-container 结束 -->
 
     <h2>强化学习、DL</h2>
     <ul>
-      <li><a href="https://hrl.boyuai.com/chapter/1/%E5%88%9D%E6%8E%A2%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0"
-             target="_blank">动手学RL(重要)</a> &
-      <a href="https://github.com/MathFoundationRL/Book-Mathematical-Foundation-of-Reinforcement-Learning?tab=readme-ov-file"
-             target="_blank">RL数学基础</a> &
-      <a href="https://www.zhihu.com/column/c_1492968284470935552" target="_blank">
-          RL专栏</a> &
-      <a href="https://zhuanlan.zhihu.com/c_1186982555915599872" target="_blank">
-          落地方法论(未看)</a> &
-      <a href="https://zhuanlan.zhihu.com/p/104224859" target="_blank">
-          强化学习路径(学完书再看 未看)</a></li>
-        <li>
-                      <a href="https://github.com/vwxyzjn/cleanrl?tab=readme-ov-file" target="_blank">
-                      cleanrl</a> &
-                      <a href="https://docs.cleanrl.dev/rl-algorithms/sac/" target="_blank">
-                      cleanrl官网</a> &
-                      <a href='https://zhuanlan.zhihu.com/p/634296763' target="_blank">
-                      深入浅出 one-hot</a></li>
-    </ul>
-    <ul>
-      <li><a href="https://www.showmeai.tech/tutorials/35?articleId=212"
-             target="_blank">深度学习概论(简介型教程)</a>  &
-          <a href="https://zhuanlan.zhihu.com/p/29309218"
-             target="_blank">Python深度学习完全路线指南</a>  &
+      <li>
+        <a href="https://hrl.boyuai.com/chapter/1/%E5%88%9D%E6%8E%A2%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0" target="_blank">动手学RL(重要)</a> &
+        <a href="https://github.com/MathFoundationRL/Book-Mathematical-Foundation-of-Reinforcement-Learning?tab=readme-ov-file" target="_blank">RL数学基础</a> &
+        <a href="https://www.zhihu.com/column/c_1492968284470935552" target="_blank">RL专栏</a> &
+        <a href="https://zhuanlan.zhihu.com/c_1186982555915599872" target="_blank">落地方法论</a> &
+        <a href="https://zhuanlan.zhihu.com/p/104224859" target="_blank">强化学习路径</a>
+      </li>
+      <li>
+        <a href="https://github.com/vwxyzjn/cleanrl?tab=readme-ov-file" target="_blank">cleanrl</a> &
+        <a href="https://docs.cleanrl.dev/rl-algorithms/sac/" target="_blank">cleanrl官网</a> &
+        <a href='https://zhuanlan.zhihu.com/p/634296763' target="_blank">深入浅出 one-hot</a>
+      </li>
+       <li>
+        <a href="https://www.showmeai.tech/tutorials/35?articleId=212" target="_blank">深度学习概论</a> &
+        <a href="https://zhuanlan.zhihu.com/p/29309218" target="_blank">Python深度学习完全路线指南</a>
       </li>
     </ul>
+
     <h2>雷达与电磁波</h2>
     <ul>
-      <li><a href="https://zhuanlan.zhihu.com/p/614617770"
-             target="_blank">电磁波基础</a>  &
-          <a href="https://zhuanlan.zhihu.com/p/636466032"
-             target="_blank">雷达原理</a>  &
-          <div class="folder" onclick="toggleFolder('folder-1')">雷达原理相关网课</div>
-            <div id="folder-6" class="folder-content">
-                        <li>
-                            <a href="https://gymnasium.farama.org/api/env/#implementing-environments" target="_blank">
-                            gym官网</a> &
-                            <a href="https://pytorch.org/tutorials/beginner/basics/intro.html" target="_blank">
-                            pytorch官网</a> &
-                            <a href="https://pytorch.org/tutorials/beginner/basics/intro.html" target="_blank">
-                            pytorch中文</a> &
-                            <a href="https://numpy.org/" target="_blank">numpy</a> &
-                            <a href="https://matplotlib.org/" target="_blank">matplotlib</a> &
-                            <a href="https://pypandas.cn/docs/ " target="_blank">pandas</a> &
-                            <a href="https://pettingzoo.farama.org/content/environment_creation/" target="_blank">
-                            pettingzoo官网</a></li>
-              </div>
-          </div>
+      <li>
+        <a href="https://zhuanlan.zhihu.com/p/614617770" target="_blank">电磁波基础</a> &
+        <a href="https://zhuanlan.zhihu.com/p/636466032" target="_blank">雷达原理</a>
       </li>
     </ul>
+    <!-- 修正点 3: 文件夹应该作为独立的元素，而不是嵌套在 <ul> 或 <li> 中 -->
+    <div class="folder-container">
+        <div class="folder" onclick="toggleFolder('folder-6')">雷达原理相关网课</div>
+        <!-- 修正点 4: onclick 事件应指向正确的 ID (folder-6) -->
+        <div id="folder-6" class="folder-content">
+            <ul>
+                <li>
+                    <a href="https://gymnasium.farama.org/api/env/#implementing-environments" target="_blank">gym官网</a> &
+                    <a href="https://pytorch.org/tutorials/beginner/basics/intro.html" target="_blank">pytorch官网</a> &
+                    <a href="https://numpy.org/" target="_blank">numpy</a> &
+                    <a href="https://matplotlib.org/" target="_blank">matplotlib</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
     <h2>机器学习</h2>
     <ul>
-      <li><a href="https://www.showmeai.tech/article-detail/189"target="_blank">朴素贝叶斯详解</a>
-          & <a href="https://www.showmeai.tech/article-detail/188"target="_blank">逻辑回归算法</a>
-       & <a href="https://www.showmeai.tech/article-detail/187"target="_blank">KNN算法</a>
-          & <a href="https://www.showmeai.tech/article-detail/190"target="_blank">决策树算法[剪枝,连续/离散,缺失值处理]</a>
-          & <a href="#"target="_blank">a</a></li>
-      <li><a href="#"target="_blank">a</a>
-          & <a href="#"target="_blank">a</a>
-          & <a href="#"target="_blank">a</a>
-          & <a href="#"target="_blank">a</a></li>
+      <li>
+        <a href="https://www.showmeai.tech/article-detail/189" target="_blank">朴素贝叶斯详解</a> &
+        <a href="https://www.showmeai.tech/article-detail/188" target="_blank">逻辑回归算法</a> &
+        <a href="https://www.showmeai.tech/article-detail/187" target="_blank">KNN算法</a> &
+        <a href="https://www.showmeai.tech/article-detail/190" target="_blank">决策树算法</a>
+      </li>
     </ul>
     <h2>数学基础</h2>
     <ul>
-      <li><a href="https://zhuanlan.zhihu.com/p/336928427" target= "_blank">梯度,散度,旋度</a>
-          & <a href=" https://zhuanlan.zhihu.com/p/672847151 "target="_blank">叉乘,点乘</a></li>
-      <li><a href="https://www.matongxue.com/madocs/32/" target ="_blank">通俗易懂的卷积</a>
-          & <a href="https://www.zhihu.com/question/22298352/answer/637156871"target="_blank">对卷积的困惑</a></li>
-      <li><a href="https://zhuanlan.zhihu.com/p/29957294" target ="_blank">归一化,标准化,正则化区分</a>
-       & <a href="https://zhuanlan.zhihu.com/p/67931198" target ="_blank">正则化讲解</a>
-          & <a href="https://blog.csdn.net/qq_40765537/article/details/105320462"target="_blank">正则化原理</a></li>
-       <li><a href="#"target="_blank">a</a></li>
-       <li><a href="https://zhuanlan.zhihu.com/p/35423404"target="_blank">信息论的各种熵</a></li>
+      <li>
+        <a href="https://zhuanlan.zhihu.com/p/336928427" target="_blank">梯度,散度,旋度</a> &
+        <a href="https://zhuanlan.zhihu.com/p/672847151" target="_blank">叉乘,点乘</a>
+      </li>
+      <li>
+        <a href="https://www.matongxue.com/madocs/32/" target="_blank">通俗易懂的卷积</a> &
+        <a href="https://www.zhihu.com/question/22298352/answer/637156871" target="_blank">对卷积的困惑</a>
+      </li>
+      <li>
+        <a href="https://zhuanlan.zhihu.com/p/29957294" target="_blank">归一化,标准化,正则化区分</a> &
+        <a href="https://zhuanlan.zhihu.com/p/67931198" target="_blank">正则化讲解</a> &
+        <a href="https://blog.csdn.net/qq_40765537/article/details/105320462" target="_blank">正则化原理</a>
+      </li>
+       <li><a href="https://zhuanlan.zhihu.com/p/35423404" target="_blank">信息论的各种熵</a></li>
     </ul>
     <h2>其他基础</h2>
     <h3>机器学习实战</h3>
     <ul>
-      <li><a href="https://www.showmeai.tech/tutorials/41"target="_blank">机器学习实战</a></li>
-      <li><a href="#"target="_blank">a</a></li>
-      <li><a href="#"target="_blank">a</a></li>
+      <li><a href="https://www.showmeai.tech/tutorials/41" target="_blank">机器学习实战</a></li>
     </ul>
     <h3>傅里叶变换</h3>
     <ul>
-      <li><a href="https://www.zhihu.com/column/c_1875924637864554497"target="_blank">
-          从零开始的傅里叶变换[分解、标准化、打包简化]</a></li>
-      <li><a href="#"target="_blank">a</a></li>
+      <li><a href="https://www.zhihu.com/column/c_1875924637864554497" target="_blank">从零开始的傅里叶变换</a></li>
     </ul>
     <h3>降维算法</h3>
     <ul>
-      <li><a href="https://mp.weixin.qq.com/s/Xt1vLQfB20rTmtLjiLsmww"target="_blank">PCA原理详解</a></li>
-      <li><a href="https://mp.weixin.qq.com/s/Dv51K8JETakIKe5dPBAPVg"target="_blank">机器学习中的SVD</a></li>
-      <li><a href="#"target="_blank">a</a> & <a href="#"target="_blank">a</a> & <a href="#"target="_blank">a</a>
-          & <a href="#"target="_blank">a</a></li>
+      <li><a href="https://mp.weixin.qq.com/s/Xt1vLQfB20rTmtLjiLsmww" target="_blank">PCA原理详解</a></li>
+      <li><a href="https://mp.weixin.qq.com/s/Dv51K8JETakIKe5dPBAPVg" target="_blank">机器学习中的SVD</a></li>
     </ul>
     <h3>数据处理</h3>
     <ul>
-      <li><a href="https://zhuanlan.zhihu.com/p/623375044"target="_blank">csv文件</a></li>
-      <li><a href="#"target="_blank">a</a></li>
-      <li><a href="#"target="_blank">a</a></li>
-      <li><a href="#"target="_blank">a</a></li>
-      <li><a href="#"target="_blank">a</a></li>
+      <li><a href="https://zhuanlan.zhihu.com/p/623375044" target="_blank">csv文件</a></li>
     </ul>
   </div>
+
 <script>
-        function toggleFolder(folderId) {
-            const folderContent = document.getElementById(folderId);
-            if (folderContent.style.display === "none" || folderContent.style.display === "") {
-                folderContent.style.display = "block";
-            } else {
-                folderContent.style.display = "none";
-            }
-        }
+  function toggleFolder(folderId) {
+    const folderContent = document.getElementById(folderId);
+    if (folderContent) { // 确保元素存在
+      // 切换 display 状态
+      if (folderContent.style.display === "block") {
+        folderContent.style.display = "none";
+      } else {
+        folderContent.style.display = "block";
+      }
+    }
+  }
 </script>
+
 </body>
 </html>
-
